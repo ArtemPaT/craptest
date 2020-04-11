@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<style type="text/css">
+		.test {
+			display: none;
+			background: #5cdbdb;
+		}
+		.end {
+			display: none;
+			background: #0098de;
+		}
+		.border-1 {
+			border: 2px solid;
+			background: white;
+		}
+		.answer {
+			background: white;
+			cursor: pointer;
+		}
+		.answer:hover {
+			background: #d9d9d9;
+		}
+		.img {
+			width: 100%;
+			height: 100%;
+		}
+		.hello {
+			background: #0098de;
+		}
+	</style>
+</head>
+<body>
+	<div class="hello col-6 mx-auto shadow text-center pb-5 rounded">
+		<h1>Супер-пупер тест по химии!</h1>
+			<img src="start.gif">	
+		<h2>Не промахивайся! Шанс ответить всего один!</h2>
+		<h2>Готов?</h2>
+		<button class="btn btn-danger pl-5 pr-5">Погнали!</button>
+		
+
+	</div>
+	<div class="col-6 mx-auto test shadow pb-5">
+		<h2 class="text-center question">fdsd</h2>
+		<div class="col-12" style="height: 400px;">
+			<img src="" class="img">
+		</div>
+		<div class="col-12 mt-3" style="height: ;">
+			<div class="pt-3">
+				<div class="answer mt-3 row">
+					<div class="ml-3 rounded-circle border-1 border-dark mt-1" style="width: 17px; height: 17px;">
+						
+					</div>
+					<p class="answers ml-2"></p>
+				</div>
+				<div class="answer mt-3 row">
+					<div class="ml-3 rounded-circle border-1 border-dark mt-1" style="width: 17px; height: 17px;">
+						
+					</div>
+					<p class="answers ml-2"></p>
+				</div>
+				<div class="answer mt-3 row">
+					<div class="ml-3 rounded-circle border-1 border-dark mt-1" style="width: 17px; height: 17px;">
+						
+					</div>
+					<p class="answers ml-2"></p>
+				</div>
+				<div class="answer mt-3 row">
+					<div class="ml-3 rounded-circle border-1 border-dark mt-1" style="width: 17px; height: 17px;">
+						
+					</div>
+					<p class="answers ml-2"></p>
+				</div>
+				<button class="btn btn-primary mt-3">
+					Далее
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="end col-6 pb-5 mx-auto rounded text-center">
+		<h1>Тест окончен!</h1>
+		<h2>Ваш счет: <span class="score"></span></h2>
+		<h3 class="result"></h3>
+		<img src="" class="gif_end">
+	</div>
+	<script type="text/javascript">
+		let question = document.querySelector('.question');
+		let img = document.querySelector('.img');
+		let scores = document.querySelector('.score');
+		let result = document.querySelector('.result');
+		let gif_end = document.querySelector('.gif_end');
+		let btn = document.querySelector('.btn-primary');
+		let answers = document.querySelectorAll('.answers');
+		let answer = document.querySelectorAll('.answer');
+		let start = document.querySelector('.btn-danger');
+		let hello = document.querySelector('.hello');
+		let test = document.querySelector('.test');
+		let end = document.querySelector('.end');
+		let gif_list = ['zero.gif', 'crap.gif', 'ok.gif', 'win.gif', 'jesus.gif']
+		let answer_list_right = ['на кислотные, основные и амфотерные', 'P2O5', 'СН3СНО', 'пропаналь', 'HCl, HNO3, H2CO3', 'Жидкость', 'красным', 'CO2', 'азот', 'малиновым'];
+		let question_list = ['Оксиды классифицируются...', 'Укажите кислотные оксиды', 'Укажите формулу альдегида', 'При окислении пропанола-1 при нагревании на медном катализаторе образуется', 'Выберите группу веществ, в которой указаны только формулы кислот.', 'В каком агрегатном состоянии при нормальных условиях находится гексан?', 'Под действием растворов кислот лакмус синий становится:', 'С каким из веществ не взаимодействует соляная кислота HCl?', 'Какие газы входят в состав воздуха?', 'Индикатор фенолфталеин в щелочной среде становится'];
+		let image_list = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.png', '7.png', '8.jpg', '9.jpg', '10.png'];
+		let answer_list_1 = ['на кислотные, основные и амфотерные', 'CuO', 'СН3СООН', 'муравьиный альдегид', 'HCl, H2O, H2CO3', 'Газ', 'малиновым', 'KOH', 'хлор', 'красным'];
+		let answer_list_2 = ['на кислотные и основные', 'ZnO', 'СН3СНО', 'ацетон', 'HCl, HNO3, H2CO3', 'Жидкость', 'фиолетовым', 'CO2', 'азот', 'малиновым '];
+		let answer_list_3 = ['на простые и сложные', 'P2O5', 'СН3СОСН3', 'ацетальдегид', 'NaСl, H3PO4, H2SO3', 'Твердое вещество', 'красным', 'BaO', 'фтор', 'бесцветным'];
+		let answer_list_4 = ['на щелочные, основные, кислотные и амфотерные', 'CaO', 'С2Н5ОН', 'пропаналь', 'HBr, H2SO4, CuSO4', 'Плазма', 'не изменяет окраску', 'Zn', 'водород', 'жёлтым'];
+		let circle = document.querySelectorAll('.border-1');
+		let score = 0;
+		let num = 0;
+		let check = false;
+		let check_score = false;
+		//
+		start.onclick = function() {
+			hello.style.display = 'none';
+			test.style.display = 'block';
+		}
+		//
+		answers[0].innerHTML = answer_list_right[num];
+		answers[1].innerHTML = answer_list_2[num];
+		answers[2].innerHTML = answer_list_3[num];
+		answers[3].innerHTML = answer_list_4[num];
+		question.innerHTML = question_list[num];
+		img.src = image_list[0];
+		//
+			btn.onclick = function() {
+				num = num + 1;
+				for (let i = 0; i < 4; i++) {
+					answer[i].style.background = '';
+					circle[i].style.background = '';
+				}
+				answers[0].innerHTML = answer_list_1[num];
+				answers[1].innerHTML = answer_list_2[num];
+				answers[2].innerHTML = answer_list_3[num];
+				answers[3].innerHTML = answer_list_4[num];
+				question.innerHTML = question_list[num];
+				img.src = image_list[num];
+				check = false;
+				check_score = false;
+				if (num > 9) {
+					//show 'win' div
+					test.style.display = 'none';
+					end.style.display = 'block';
+					scores.innerHTML = score;
+				if (score == 0) {
+					result.innerHTML = 'Я промолчу...';
+					gif_end.src = gif_list[0];
+				}
+				if (score == 1 || score == 2 || score == 3) {
+					result.innerHTML = 'Возвращайся, когда выучишь эти темы!';
+					gif_end.src = gif_list[1];
+				}
+				if (score == 4 || score == 5 || score == 6) {
+					result.innerHTML = 'Вот к чему приводят прогулы.';
+					gif_end.src = gif_list[2];
+				}
+				if (score == 7 || score == 8 || score == 9) {
+					result.innerHTML = 'Отличный результат!';
+					gif_end.src = gif_list[3];
+				}
+				if (score == 10) {
+					result.innerHTML = 'Ты что натворил!?';
+					gif_end.src = gif_list[4];
+				}
+			}
+		}
+		
+		
+		// answer check
+		
+			if (num == 0) {
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#42ff42';
+						circle[0].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#e32020';
+						circle[1].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 1) {
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#e32020';
+						circle[1].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#42ff42';
+						circle[2].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 2) {
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 3) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#e32020';
+						circle[1].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#42ff42';
+						circle[3].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+			}
+			if (num == 4) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 5) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 6) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#e32020';
+						circle[1].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#42ff42';
+						circle[2].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 7) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 8) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			if (num == 9) {
+				
+				answer[0].onclick = function() {
+					if (check == false) {
+						answer[0].style.background = '#e32020';
+						circle[0].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[1].onclick = function() {
+					if (check == false) {
+						answer[1].style.background = '#42ff42';
+						circle[1].style.background = '#42b7ff';
+						if (check_score == false) {
+							score = score + 1;
+							check_score = true;
+						}
+						check = true;
+					}
+				}
+				answer[2].onclick = function() {
+					if (check == false) {
+						answer[2].style.background = '#e32020';
+						circle[2].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+				answer[3].onclick = function() {
+					if (check == false) {
+						answer[3].style.background = '#e32020';
+						circle[3].style.background = '#42b7ff';
+						check = true;
+					}	
+				}
+			}
+			
+		
+	
+	</script>
+</body>
+</html>
